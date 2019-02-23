@@ -1,4 +1,4 @@
-let { add } = require("./index");
+let { add } = require("../index.js");
 let assert = require("assert");
 describe("the add function tests", function() {
   it("should return 11 for arguments 5 and 6", function() {
