@@ -10,7 +10,7 @@ describe("The query package", function() {
         by: "joseph-diperi"
       };
 
-      assert.deepEqual(actual, expectation);
+      expect(actual).toEqual(expectation);
     });
     it("should return an objet of all query params when a query string is passed to it.", function() {
       const query = "by=joseph-diperi";
@@ -19,7 +19,7 @@ describe("The query package", function() {
         by: "joseph-diperi"
       };
 
-      assert.deepEqual(actual, expectation);
+      expect(actual).toEqual(expectation);
     });
   });
   describe("The Stringify Function", function() {
@@ -30,7 +30,7 @@ describe("The query package", function() {
       const actual = stringify(query);
       const expectation = "by=joseph-diperi";
 
-      assert.equal(actual, expectation);
+      expect(actual).toBe(expectation);
     });
 
     it("should return a query string when an object is passed into it", function() {
@@ -42,7 +42,7 @@ describe("The query package", function() {
       const actual = stringify(query);
       const expectation = "by=joseph-diperi";
 
-      assert.equal(actual, expectation);
+      expect(actual).toBe(expectation);
     });
   });
 });

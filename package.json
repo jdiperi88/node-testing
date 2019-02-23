@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "nyc mocha src/test/**/**.spec.js"
+    "test": "jest --coverage"
   },
   "keywords": [],
   "author": "",
