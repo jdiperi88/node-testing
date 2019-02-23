@@ -10,7 +10,7 @@
 
 - Create a very basic test runner and assertion library
 
-### Resources
+## Resources
 
 - All resources for this repo come from the udemy course that is linked below
 - https://www.udemy.com/testing-javascript/
