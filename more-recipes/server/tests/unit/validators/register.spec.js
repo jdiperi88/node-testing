@@ -1,5 +1,5 @@
-import validators from "../../validators";
-import { User } from "../../database/models";
+import validators from "../../../validators";
+import { User } from "../../../database/models";
 const { RegisterUserValidator } = validators;
 
 describe("The RegisterUserValidator Class", () => {
