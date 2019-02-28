@@ -92,4 +92,60 @@ describe("The RegisterUserValidator Class", () => {
       expect(errors).toEqual(["A user with this email already exists."]);
     });
   });
+
+  describe("The isValid Function", () => {
+    test("returns true if validation passes", async () => {
+      // ARRANGE ACTION ASSERTION 3 STEP CYCLE
+      await User.destroy({ where: {} });
+      //ARRANGE
+      const validator = new RegisterUserValidator({
+        name: "Joey DiPeri",
+        email: "jdiperi88@gmail.com",
+        password: "password"
+      });
+      //ACTION
+      let result = await validator.isValid();
+
+      //ASSERT
+      expect(result).toBe(true);
+    });
+
+    test("returns false if validation fails", async () => {
+      // ARRANGE ACTION ASSERTION 3 STEP CYCLE
+      await User.destroy({ where: {} });
+      //ARRANGE
+      const validator = new RegisterUserValidator({
+        name: "Joey",
+        email: "jdiperi88@gmail.com",
+        password: "password"
+      });
+      //ACTION
+      let result = await validator.isValid();
+
+      //ASSERT
+      expect(result).toBe(false);
+    });
+
+    test("the validateName, validateEmail, validatePassword functions are called in the isValid function", async () => {
+      // ARRANGE ACTION ASSERTION 3 STEP CYCLE
+      await User.destroy({ where: {} });
+      //ARRANGE
+      const validator = new RegisterUserValidator({
+        name: "Joey",
+        email: "jdiperi88gmail.com",
+        password: "pass"
+      });
+      //JEST SPY FUNCTION
+      jest.spyOn(validator, "validateName");
+      jest.spyOn(validator, "validateEmail");
+      jest.spyOn(validator, "validatePassword");
+      //ACTION
+      let result = await validator.isValid();
+
+      //ASSERT
+      expect(validator.validateName).toHaveBeenCalled();
+      expect(validator.validateEmail).toHaveBeenCalled();
+      expect(validator.validatePassword).toHaveBeenCalled();
+    });
+  });
 });
