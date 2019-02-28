@@ -1,14 +1,14 @@
 import validators from "../../../validators";
 import { User } from "../../../database/models";
 const { RegisterUserValidator } = validators;
-
+import faker from "faker";
 describe("The RegisterUserValidator Class", () => {
   describe("The validateName Function", () => {
     test("The validateName function adds a required error to the errors array if name is not provided.", () => {
       // ARRANGE ACTION ASSERTION 3 STEP CYCLE
       //ARRANGE
       const validator = new RegisterUserValidator({
-        email: "jdiperi88@gmail.com"
+        email: faker.internet.email()
       });
       //ACTION
       validator.validateName();
@@ -36,7 +36,7 @@ describe("The RegisterUserValidator Class", () => {
       // ARRANGE ACTION ASSERTION 3 STEP CYCLE
       //ARRANGE
       const validator = new RegisterUserValidator({
-        email: "jdiperi88@gmail.com"
+        email: faker.internet.email()
       });
       //ACTION
       validator.validatePassword();
@@ -64,7 +64,7 @@ describe("The RegisterUserValidator Class", () => {
       // ARRANGE ACTION ASSERTION 3 STEP CYCLE
       //ARRANGE
       const validator = new RegisterUserValidator({
-        name: "jdiperi88@gmail.com"
+        name: "jdipegmail.com"
       });
       //ACTION
       await validator.validateEmail();
@@ -75,15 +75,15 @@ describe("The RegisterUserValidator Class", () => {
 
     test("adds an email taken error if user already exists with that email", async () => {
       // ARRANGE ACTION ASSERTION 3 STEP CYCLE
-      await User.destroy({ where: {} });
+
       //ARRANGE
-      await User.create({
+      const user = await User.create({
         name: "Joey",
-        email: "example@example.com",
+        email: faker.internet.email(),
         password: "password"
       });
       const validator = new RegisterUserValidator({
-        email: "example@example.com"
+        email: user.email
       });
       //ACTION
       await validator.validateEmail();
@@ -96,11 +96,11 @@ describe("The RegisterUserValidator Class", () => {
   describe("The isValid Function", () => {
     test("returns true if validation passes", async () => {
       // ARRANGE ACTION ASSERTION 3 STEP CYCLE
-      await User.destroy({ where: {} });
+
       //ARRANGE
       const validator = new RegisterUserValidator({
         name: "Joey DiPeri",
-        email: "jdiperi88@gmail.com",
+        email: faker.internet.email(),
         password: "password"
       });
       //ACTION
@@ -108,15 +108,16 @@ describe("The RegisterUserValidator Class", () => {
 
       //ASSERT
       expect(result).toBe(true);
+      await User.destroy({ where: {} });
     });
 
     test("returns false if validation fails", async () => {
       // ARRANGE ACTION ASSERTION 3 STEP CYCLE
-      await User.destroy({ where: {} });
+
       //ARRANGE
       const validator = new RegisterUserValidator({
         name: "Joey",
-        email: "jdiperi88@gmail.com",
+        email: faker.internet.email(),
         password: "password"
       });
       //ACTION
@@ -124,15 +125,16 @@ describe("The RegisterUserValidator Class", () => {
 
       //ASSERT
       expect(result).toBe(false);
+      await User.destroy({ where: {} });
     });
 
     test("the validateName, validateEmail, validatePassword functions are called in the isValid function", async () => {
       // ARRANGE ACTION ASSERTION 3 STEP CYCLE
-      await User.destroy({ where: {} });
+
       //ARRANGE
       const validator = new RegisterUserValidator({
         name: "Joey",
-        email: "jdiperi88gmail.com",
+        email: "jdipermail.com",
         password: "pass"
       });
       //JEST SPY FUNCTION
@@ -146,6 +148,7 @@ describe("The RegisterUserValidator Class", () => {
       expect(validator.validateName).toHaveBeenCalled();
       expect(validator.validateEmail).toHaveBeenCalled();
       expect(validator.validatePassword).toHaveBeenCalled();
+      await User.destroy({ where: {} });
     });
   });
 });

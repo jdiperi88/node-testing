@@ -1,12 +1,12 @@
 import middleware from "../../../middleware";
-
+import faker from "faker";
 const { registerUserValidator } = middleware;
 
 test("the registerUserValidator calls the next if the validation is successful", async () => {
   const req = {
     body: {
-      name: "joey diperi",
-      email: "example@example.com",
+      name: "joey di",
+      email: faker.internet.email(),
       password: "joeyexample"
     }
   };
