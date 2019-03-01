@@ -3,6 +3,9 @@ import app from "../../../index";
 import { User } from "../../../database/models";
 
 describe("user sign up test", () => {
+  beforeEach(async () => {
+    await User.destroy({ where: {} });
+  });
   test("should register a new user", async () => {
     //arrange
     //get some fake user data
@@ -29,7 +32,6 @@ describe("user sign up test", () => {
     });
 
     expect(userFromDatabase).toBeTruthy();
-    User.destroy({ where: {} });
   });
 
   test("should return validation error for duplicate email", async () => {
@@ -49,6 +51,5 @@ describe("user sign up test", () => {
     expect(response.status).toBe(422);
 
     expect(response.body.data).toMatchSnapshot();
-    User.destroy({ where: {} });
   });
 });
