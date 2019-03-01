@@ -1,10 +1,6 @@
 import supertest from "supertest";
 import app from "../../../index";
 import { User, Recipe } from "../../../database/models";
-import faker from "faker";
-import jwt from "jsonwebtoken";
-import bcrypt from "bcrypt";
-import config from "../../../config";
 import { generateUser, generateRecipe } from "../../utils/generate";
 describe("The create recipe process", () => {
   test("should create recipe and return recipe details", async () => {
