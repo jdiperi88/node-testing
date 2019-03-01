@@ -1,17 +1,13 @@
 import middleware from "../../../middleware";
-import { User } from "../../../database/models";
 import jwt from "jsonwebtoken";
 const { auth } = middleware;
 import faker from "faker";
+import { generateUser } from "../../utils/generate";
 describe("The auth middleware", () => {
   test("should call next if user is authenticated", async () => {
-    const user = await User.create({
-      name: "Joey Dip",
-      email: faker.internet.email(),
-      password: "password"
-    });
+    const { user, access_token, fakeUser } = await generateUser();
     const req = {
-      body: { access_token: jwt.sign({ email: user.email }, "secret") }
+      body: { user, access_token }
     };
 
     const res = {};
@@ -22,7 +18,6 @@ describe("The auth middleware", () => {
     expect(next).toHaveBeenCalled();
     expect(req.authUser).toBeDefined();
     expect(req.authUserObj).toBeDefined();
-    await User.destroy({ where: {} });
   });
 
   test("should call sendFailureResponse function if user is not authenticated", async () => {
