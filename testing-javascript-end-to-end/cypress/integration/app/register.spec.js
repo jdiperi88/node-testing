@@ -23,5 +23,6 @@ describe("The registration process", () => {
     cy.url().should("equal", "http://localhost:5678/");
 
     cy.get("span > .mr-2").should("have.text", "Create recipe");
+    cy.get("span > .mr-2").should("have.text", "Create recipe");
   });
 });
