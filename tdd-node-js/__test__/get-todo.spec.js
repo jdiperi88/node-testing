@@ -7,13 +7,18 @@ describe("get single todo", () => {
     const todo = generateTodo();
     const databaseTodo = await Todo.create(todo);
     const res = await server.get(`/todos/${databaseTodo.id}`);
-    // console.log(res);
-
     expect(res.body).toEqual({
       id: databaseTodo.id,
       title: todo.title,
       description: todo.description,
       completed: todo.completed
     });
+  });
+
+  it("test receives error message if todo is not found", async () => {
+    const fakeId = "fake";
+    const res = await server.get(`/todos/${fakeId}`);
+    expect(res.status).toBe(404);
+    expect(res.body.message).toBe("Todo not found.");
   });
 });
